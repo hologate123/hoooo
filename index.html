@@ -29,12 +29,14 @@
             -webkit-backdrop-filter: blur(16px) saturate(180%);
             border: 1px solid rgba(0, 0, 0, 0.04);
             box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.02);
-            transition: transform 0.3s ease, background 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            cursor: pointer;
         }
         
         .card-glass:hover {
-            background: rgba(255, 255, 255, 0.6);
-            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.8);
+            transform: translateY(-8px);
+            border-color: rgba(56, 189, 248, 0.2);
         }
 
         .light-glow {
@@ -50,8 +52,8 @@
         }
 
         .hero-text {
-            letter-spacing: -0.06em;
-            line-height: 0.85;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
         }
 
         .section-fade {
@@ -65,8 +67,31 @@
             transform: translateY(0);
         }
 
+        .view-transition {
+            animation: fadeIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .hidden-view { display: none; }
         .visible-view { display: block; }
+        
+        .spec-item {
+            border-top: 1px solid #f1f5f9;
+            padding-top: 1.5rem;
+        }
+        
+        @media (min-width: 640px) {
+            .spec-item {
+                border-top: none;
+                border-left: 1px solid #f1f5f9;
+                padding-top: 0;
+                padding-left: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body class="selection:bg-sky-100">
@@ -84,23 +109,21 @@
         </div>
     </header>
 
-    <div id="main-view" class="visible-view">
+    <!-- HOME VIEW -->
+    <div id="home-view" class="visible-view">
         <main class="pt-48 pb-20">
-            <!-- Hero Section -->
-            <section class="px-8 max-w-screen-xl mx-auto mb-32">
-                <div class="max-w-4xl text-left">
-                    <h2 class="hero-text text-[clamp(4rem,12vw,9rem)] font-light mb-10">
-                        Beyond <br/>
-                        <span class="text-sky-500/80">Silicon.</span>
+            <section class="px-8 max-w-screen-2xl mx-auto mb-48 text-center">
+                <div class="max-w-7xl mx-auto">
+                    <h2 class="hero-text text-[clamp(3.5rem,10vw,8.5rem)] font-light mb-12">
+                        Beyond <span class="text-sky-500/80">Silicon.</span>
                     </h2>
-                    <p class="max-w-lg text-2xl text-gray-500 font-light leading-snug">
-                        A new class of photonic integrated circuit that computes with light. 
-                        No heat. No limits. Pure intelligence.
+                    <p class="max-w-4xl mx-auto text-xl md:text-2xl text-gray-500 font-light leading-relaxed tracking-tight">
+                        A new class of photonic integrated circuit that computes with light. <br class="hidden md:block">
+                        Propelling artificial intelligence into a zero-heat, near-zero-latency future of pure light logic.
                     </p>
                 </div>
             </section>
 
-            <!-- Explanation Section -->
             <section class="px-8 max-w-screen-xl mx-auto mb-32">
                 <div class="grid md:grid-cols-12 gap-10 items-end mb-16">
                     <div class="md:col-span-7">
@@ -115,23 +138,119 @@
                 </div>
 
                 <div class="grid md:grid-cols-3 gap-6">
-                    <div class="card-glass p-10 rounded-[32px]">
+                    <div onclick="showView('photonic-core')" class="card-glass p-10 rounded-[32px]">
                         <h5 class="text-lg font-medium mb-3">Photonic Core</h5>
-                        <p class="text-gray-500 text-sm font-light leading-relaxed">Light as logic. An entirely new computing paradigm designed for massive throughput.</p>
+                        <p class="text-gray-500 text-sm font-light leading-relaxed mb-6">Light as logic. An entirely new computing paradigm designed for massive throughput.</p>
+                        <span class="text-sky-500 text-[10px] uppercase tracking-widest font-bold">Explore Technology &rarr;</span>
                     </div>
-                    <div class="card-glass p-10 rounded-[32px]">
+                    <div onclick="showView('multi-layer')" class="card-glass p-10 rounded-[32px]">
                         <h5 class="text-lg font-medium mb-3">Multi-Layer</h5>
-                        <p class="text-gray-500 text-sm font-light leading-relaxed">Stacked waveguide architecture at nanometer precision for 3D signal routing.</p>
+                        <p class="text-gray-500 text-sm font-light leading-relaxed mb-6">Stacked waveguide architecture at nanometer precision for 3D signal routing.</p>
+                        <span class="text-sky-500 text-[10px] uppercase tracking-widest font-bold">Explore Architecture &rarr;</span>
                     </div>
-                    <div class="card-glass p-10 rounded-[32px]">
+                    <div onclick="showView('secure-envelope')" class="card-glass p-10 rounded-[32px]">
                         <h5 class="text-lg font-medium mb-3">Secure Envelope</h5>
-                        <p class="text-gray-500 text-sm font-light leading-relaxed">Protected by the physics of light itself, ensuring hardware-level data integrity.</p>
+                        <p class="text-gray-500 text-sm font-light leading-relaxed mb-6">Protected by the physics of light itself, ensuring hardware-level data integrity.</p>
+                        <span class="text-sky-500 text-[10px] uppercase tracking-widest font-bold">Explore Security &rarr;</span>
                     </div>
                 </div>
             </section>
         </main>
     </div>
 
+    <!-- PHOTONIC CORE VIEW -->
+    <div id="photonic-core-view" class="hidden-view">
+        <main class="pt-48 pb-32 px-8 max-w-screen-xl mx-auto text-center">
+            <div class="max-w-4xl mx-auto">
+                <button onclick="showView('home')" class="mx-auto mb-16 text-[10px] uppercase tracking-[0.2em] text-gray-400 font-bold hover:text-sky-500 transition-colors flex items-center justify-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    Back to Overview
+                </button>
+                <h2 class="text-7xl md:text-8xl font-light tracking-tighter mb-10">Photonic <span class="text-sky-500">Core</span></h2>
+                <p class="text-2xl text-gray-500 font-light leading-relaxed mb-24 max-w-2xl mx-auto">
+                    Traditional silicon chips are hitting the "Thermal Wall." Our core bypasses electron resistance entirely, computing at the speed of light.
+                </p>
+                <div class="grid sm:grid-cols-2 gap-x-16 gap-y-16 text-left">
+                    <div class="spec-item">
+                        <h4 class="text-xs font-bold uppercase tracking-widest mb-3 text-sky-500">Zero Resistivity</h4>
+                        <p class="text-gray-400 text-sm font-light leading-relaxed">Photons do not collide like electrons. They travel through our waveguides with near-zero energy loss to heat, enabling sustained peak performance.</p>
+                    </div>
+                    <div class="spec-item">
+                        <h4 class="text-xs font-bold uppercase tracking-widest mb-3 text-sky-500">THz Bandwidth</h4>
+                        <p class="text-gray-400 text-sm font-light leading-relaxed">By using multiple wavelengths (WDM), our core can process data at Terahertz frequencies across a single lane, bypassing traditional bottlenecks.</p>
+                    </div>
+                    <div class="spec-item">
+                        <h4 class="text-xs font-bold uppercase tracking-widest mb-3 text-sky-500">Speed of Light</h4>
+                        <p class="text-gray-400 text-sm font-light leading-relaxed">Latency is reduced to the physical minimum. Signal propagation happens at nearly 300,000 km/s within the circuit pathways.</p>
+                    </div>
+                    <div class="spec-item">
+                        <h4 class="text-xs font-bold uppercase tracking-widest mb-3 text-sky-500">Passive Modulation</h4>
+                        <p class="text-gray-400 text-sm font-light leading-relaxed">Optical computing allows for certain logic operations to occur passively as light moves through geometry, requiring no active power draw.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MULTI-LAYER VIEW -->
+    <div id="multi-layer-view" class="hidden-view">
+        <main class="pt-48 pb-32 px-8 max-w-screen-xl mx-auto">
+            <div class="mb-20 text-center max-w-3xl mx-auto">
+                <button onclick="showView('home')" class="mb-8 text-[10px] uppercase tracking-[0.2em] text-gray-400 font-bold hover:text-sky-500 transition-colors flex items-center justify-center gap-2 mx-auto">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    Back to Overview
+                </button>
+                <h2 class="text-6xl font-light tracking-tighter mb-8">Spatial <span class="text-sky-500">Dimensions.</span></h2>
+                <p class="text-xl text-gray-500 font-light">Our proprietary 3D stacking technology allows waveguides to cross over each other without interference, enabling integration densities previously thought impossible.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-gray-50 rounded-[32px] p-10">
+                    <h4 class="text-xl font-medium mb-4">Vertical Integration</h4>
+                    <p class="text-gray-500 font-light text-sm leading-relaxed">Unlike electrical vias that cause latency and heat, our optical vertical couplers move light between layers with 99.8% efficiency.</p>
+                </div>
+                <div class="bg-gray-50 rounded-[32px] p-10">
+                    <h4 class="text-xl font-medium mb-4">Dense Interconnects</h4>
+                    <p class="text-gray-500 font-light text-sm leading-relaxed">With over 12 stacked layers of photonic circuitry, the HOLO PIC achieves the compute density of a data center rack on a single chip.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- SECURE ENVELOPE VIEW -->
+    <div id="secure-envelope-view" class="hidden-view">
+        <main class="pt-48 pb-32 px-8 max-w-screen-xl mx-auto text-center">
+            <div class="max-w-4xl mx-auto">
+                <button onclick="showView('home')" class="mx-auto mb-16 text-[10px] uppercase tracking-[0.2em] text-gray-400 font-bold hover:text-sky-500 transition-colors flex items-center justify-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    Exit Secure View
+                </button>
+                <h2 class="text-7xl md:text-8xl font-light tracking-tighter mb-10">Secure <span class="text-sky-500">Envelope</span></h2>
+                <p class="text-2xl text-gray-500 font-light leading-relaxed mb-24 max-w-2xl mx-auto">
+                    Securing intelligence at the physical layer. By utilizing the unique properties of light, we've created a chip that is invisible to traditional interception.
+                </p>
+                <div class="grid sm:grid-cols-2 gap-x-16 gap-y-16 text-left">
+                    <div class="spec-item">
+                        <h4 class="text-xs font-bold uppercase tracking-widest mb-3 text-sky-500">Evanescent Protection</h4>
+                        <p class="text-gray-400 text-sm font-light leading-relaxed">Our waveguides are designed with protective cladding that triggers an immediate logic-shutdown if the field is disturbed by a physical probe.</p>
+                    </div>
+                    <div class="spec-item">
+                        <h4 class="text-xs font-bold uppercase tracking-widest mb-3 text-sky-500">Zero EM Leakage</h4>
+                        <p class="text-gray-400 text-sm font-light leading-relaxed">Electronics leak electromagnetic signatures. Photons do not. Our chips operate in complete radio-silence, immune to side-channel attacks.</p>
+                    </div>
+                    <div class="spec-item">
+                        <h4 class="text-xs font-bold uppercase tracking-widest mb-3 text-sky-500">Quantum Resilience</h4>
+                        <p class="text-gray-400 text-sm font-light leading-relaxed">Data is routed through non-repeating optical pathways, making physical interception functionally impossible without destroying the signal.</p>
+                    </div>
+                    <div class="spec-item">
+                        <h4 class="text-xs font-bold uppercase tracking-widest mb-3 text-sky-500">Physical Integrity</h4>
+                        <p class="text-gray-400 text-sm font-light leading-relaxed">The atomic precision of our PIC fabrication serves as a unique hardware fingerprint, preventing unauthorized cloning or tampering.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- LEGAL VIEW (RESTORED TO ORIGINAL LEFT-ALIGN) -->
     <div id="legal-view" class="hidden-view">
         <main class="pt-48 pb-32 px-8 max-w-screen-md mx-auto min-h-screen">
             <h2 class="text-5xl font-light mb-10 tracking-tight">Legal Notice</h2>
@@ -165,14 +284,18 @@
     </footer>
 
     <script>
-        function showView(view) {
-            const views = { 'home': document.getElementById('main-view'), 'legal': document.getElementById('legal-view') };
-            Object.values(views).forEach(v => { 
-                v.classList.add('hidden-view'); 
-                v.classList.remove('visible-view'); 
+        function showView(viewId) {
+            const views = ['home-view', 'photonic-core-view', 'multi-layer-view', 'secure-envelope-view', 'legal-view'];
+            views.forEach(id => {
+                const el = document.getElementById(id);
+                if (id === `${viewId}-view`) {
+                    el.classList.remove('hidden-view');
+                    el.classList.add('visible-view', 'view-transition');
+                } else {
+                    el.classList.add('hidden-view');
+                    el.classList.remove('visible-view', 'view-transition');
+                }
             });
-            views[view].classList.remove('hidden-view');
-            views[view].classList.add('visible-view');
             window.scrollTo({ top: 0, behavior: 'instant' });
         }
 
