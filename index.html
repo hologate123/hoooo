@@ -29,23 +29,29 @@
             -webkit-backdrop-filter: blur(16px) saturate(180%);
             border: 1px solid rgba(0, 0, 0, 0.04);
             box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.02);
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        
+        .card-glass:hover {
+            background: rgba(255, 255, 255, 0.6);
+            transform: translateY(-4px);
         }
 
         .light-glow {
             position: fixed;
-            top: 20%;
+            top: 10%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 80vw;
-            height: 80vw;
-            background: radial-gradient(circle, rgba(56, 189, 248, 0.04) 0%, rgba(255, 255, 255, 0) 70%);
+            width: 70vw;
+            height: 70vw;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.06) 0%, rgba(255, 255, 255, 0) 70%);
             z-index: -1;
             pointer-events: none;
         }
 
         .hero-text {
-            letter-spacing: -0.05em;
-            line-height: 0.9;
+            letter-spacing: -0.06em;
+            line-height: 0.85;
         }
 
         .section-fade {
@@ -59,107 +65,67 @@
             transform: translateY(0);
         }
 
-        .hidden-view { display: none; opacity: 0; }
-        .visible-view { display: block; opacity: 1; }
-
-        /* ADVANCED COLOR MATCHING 
-           1. Multiply blending kills off-whites.
-           2. High contrast/brightness forces near-whites to pure white.
-           3. Tight mask-image removes the edges of the image box entirely. */
-        .photonic-blend {
-            mix-blend-mode: multiply;
-            filter: contrast(1.15) brightness(1.05); 
-            mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
-            -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
-        }
-
-        /* Loading Shimmer Effect */
-        .shimmer {
-            background: linear-gradient(90deg, #ffffff 25%, #f8fafc 50%, #ffffff 75%);
-            background-size: 200% 100%;
-            animation: shimmer 2s infinite;
-        }
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
+        .hidden-view { display: none; }
+        .visible-view { display: block; }
     </style>
 </head>
 <body class="selection:bg-sky-100">
 
     <div class="light-glow"></div>
 
-    <header class="fixed top-0 w-full z-50 px-8 py-5 liquid-glass">
+    <header class="fixed top-0 w-full z-50 px-8 py-4 liquid-glass">
         <div class="max-w-screen-xl mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-8">
+            <div class="flex items-center">
                 <button onclick="showView('home')" class="text-2xl font-normal tracking-tighter hover:opacity-70 transition-opacity">HOLO</button>
-                <div class="hidden sm:block text-[10px] uppercase tracking-[0.3em] text-gray-400 font-semibold border-l border-gray-100 pl-8">
-                    Photonic Integrated Circuits
-                </div>
             </div>
-            <div class="flex items-center gap-8">
-                <a href="#" class="text-[10px] uppercase tracking-[0.2em] text-sky-500 font-bold hover:opacity-70 transition-opacity">Discover</a>
+            <div class="text-[10px] uppercase tracking-[0.3em] text-gray-400 font-bold">
+                Photonic Integrated Circuits
             </div>
         </div>
     </header>
 
     <div id="main-view" class="visible-view">
-        <main class="pt-64 pb-32">
-            <section class="px-8 max-w-screen-xl mx-auto mb-56">
-                <div class="grid lg:grid-cols-2 gap-12 items-center">
-                    <div>
-                        <div class="mb-12 inline-block px-4 py-1 rounded-full border border-sky-100 text-[10px] uppercase tracking-[0.2em] text-sky-500 font-bold">
-                            Photonic Integrated Circuits
-                        </div>
-                        <h2 class="hero-text text-[clamp(3.5rem,10vw,8rem)] font-light mb-16">
-                            Beyond <br/>
-                            <span class="text-sky-500/80">Silicon.</span>
-                        </h2>
-                        <p class="max-w-xl text-2xl text-gray-500 font-light leading-snug">
-                            A new class of photonic integrated circuit that computes with light. <br/>
-                            No heat. No limits. Pure intelligence.
-                        </p>
-                    </div>
-                    
-                    <div class="relative group min-h-[500px] flex items-center justify-center">
-                        <div id="img-loading" class="absolute inset-0 shimmer rounded-[60px] flex flex-col items-center justify-center">
-                            <div class="w-8 h-8 border-2 border-sky-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-                            <span class="text-[10px] uppercase tracking-widest text-sky-500 font-bold">Synchronizing...</span>
-                        </div>
-                        
-                        <div id="img-container" class="relative w-full opacity-0 transition-opacity duration-1000 flex justify-center">
-                            <div class="absolute inset-0 bg-sky-400/5 rounded-full blur-[100px] group-hover:opacity-100 transition-opacity"></div>
-                            <img id="photonic-chip-img" alt="HOLO Photonic PIC" class="relative w-[120%] max-w-none h-auto drop-shadow-xl photonic-blend hover:scale-[1.05] transition-transform duration-1000">
-                        </div>
-                    </div>
+        <main class="pt-48 pb-20">
+            <!-- Hero Section -->
+            <section class="px-8 max-w-screen-xl mx-auto mb-32">
+                <div class="max-w-4xl text-left">
+                    <h2 class="hero-text text-[clamp(4rem,12vw,9rem)] font-light mb-10">
+                        Beyond <br/>
+                        <span class="text-sky-500/80">Silicon.</span>
+                    </h2>
+                    <p class="max-w-lg text-2xl text-gray-500 font-light leading-snug">
+                        A new class of photonic integrated circuit that computes with light. 
+                        No heat. No limits. Pure intelligence.
+                    </p>
                 </div>
             </section>
 
-            <section class="px-8 max-w-screen-xl mx-auto mb-56">
-                <div class="grid md:grid-cols-12 gap-12 items-end mb-24">
+            <!-- Explanation Section -->
+            <section class="px-8 max-w-screen-xl mx-auto mb-32">
+                <div class="grid md:grid-cols-12 gap-10 items-end mb-16">
                     <div class="md:col-span-7">
-                        <h3 class="text-xs uppercase tracking-[0.2em] text-gray-400 mb-8 font-semibold">The Core</h3>
-                        <h4 class="text-6xl font-light leading-tight tracking-tight">The HOLO PIC</h4>
+                        <h3 class="text-[10px] uppercase tracking-[0.25em] text-sky-500 mb-6 font-bold">The Core</h3>
+                        <h4 class="text-5xl font-light leading-tight tracking-tight">The HOLO PIC</h4>
                     </div>
-                    <div class="md:col-span-5 pb-2">
+                    <div class="md:col-span-5 pb-1">
                         <p class="text-gray-500 text-lg font-light leading-relaxed">
-                            A breakthrough in photonic integrated circuits. We have engineered a PIC that thinks in light, computing at speeds and efficiencies that electronics cannot achieve.
+                            We have engineered a PIC that thinks in light, computing at speeds and efficiencies that electronics cannot achieve.
                         </p>
                     </div>
                 </div>
 
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div class="card-glass p-12 rounded-[40px]">
-                        <h5 class="text-xl font-medium mb-4">Photonic Core</h5>
-                        <p class="text-gray-500 font-light leading-relaxed">Light as logic. An entirely new computing paradigm.</p>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="card-glass p-10 rounded-[32px]">
+                        <h5 class="text-lg font-medium mb-3">Photonic Core</h5>
+                        <p class="text-gray-500 text-sm font-light leading-relaxed">Light as logic. An entirely new computing paradigm designed for massive throughput.</p>
                     </div>
-                    <div class="card-glass p-12 rounded-[40px]">
-                        <h5 class="text-xl font-medium mb-4">Multi-Layer Integration</h5>
-                        <p class="text-gray-500 font-light leading-relaxed">Stacked waveguide architecture at nanometer precision.</p>
+                    <div class="card-glass p-10 rounded-[32px]">
+                        <h5 class="text-lg font-medium mb-3">Multi-Layer</h5>
+                        <p class="text-gray-500 text-sm font-light leading-relaxed">Stacked waveguide architecture at nanometer precision for 3D signal routing.</p>
                     </div>
-                    <div class="card-glass p-12 rounded-[40px]">
-                        <h5 class="text-xl font-medium mb-4">Secure Envelope</h5>
-                        <p class="text-gray-500 font-light leading-relaxed">Protected by the physics of light itself.</p>
+                    <div class="card-glass p-10 rounded-[32px]">
+                        <h5 class="text-lg font-medium mb-3">Secure Envelope</h5>
+                        <p class="text-gray-500 text-sm font-light leading-relaxed">Protected by the physics of light itself, ensuring hardware-level data integrity.</p>
                     </div>
                 </div>
             </section>
@@ -167,87 +133,53 @@
     </div>
 
     <div id="legal-view" class="hidden-view">
-        <main class="pt-64 pb-64 px-8 max-w-screen-md mx-auto min-h-screen">
-            <h2 class="text-6xl font-light mb-12 tracking-tight">Legal Notice</h2>
-            <div class="space-y-16 text-gray-500 font-light leading-relaxed text-lg">
+        <main class="pt-48 pb-32 px-8 max-w-screen-md mx-auto min-h-screen">
+            <h2 class="text-5xl font-light mb-10 tracking-tight">Legal Notice</h2>
+            <div class="space-y-12 text-gray-500 font-light leading-relaxed text-base">
                 <section>
-                    <h3 class="text-black font-medium mb-4 uppercase text-xs tracking-widest">Startup Status</h3>
+                    <h3 class="text-black font-semibold mb-3 uppercase text-[10px] tracking-widest">Startup Status</h3>
                     <p>
-                        HOLO is a high-growth technology startup currently in the <span class="text-black font-medium">pre-incorporation / registration phase</span>. 
-                        We are a team of engineers and researchers dedicated to pioneering Photonic Integrated Circuits (PICs) in Europe.
+                        HOLO is a high-growth technology startup currently in the <span class="text-black font-medium">pre-incorporation phase</span>. 
+                        We are a team of researchers dedicated to pioneering Photonic Integrated Circuits (PICs) in Europe.
                     </p>
                 </section>
-
                 <section>
-                    <h3 class="text-black font-medium mb-4 uppercase text-xs tracking-widest">Company Registration</h3>
+                    <h3 class="text-black font-semibold mb-3 uppercase text-[10px] tracking-widest">Forward Looking Statements</h3>
                     <p>
-                        Our formal legal entity is currently being processed by the relevant European regulatory authorities. 
-                        During this "under registration" period, this website serves as a technical preview of our architecture and mission. 
-                        Full registration details, including our official seat and identification numbers, will be disclosed upon completion of the filing.
+                        Materials on this site may contain technical projections. Actual performance of photonic hardware is subject to fabrication variances and semiconductor supply chain constraints.
                     </p>
                 </section>
             </div>
-            <button onclick="showView('home')" class="mt-20 flex items-center gap-4 text-sky-500 hover:text-sky-600 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-                <span class="text-xs uppercase tracking-[0.2em] font-bold">Back to Home</span>
+            <button onclick="showView('home')" class="mt-16 flex items-center gap-3 text-sky-500 hover:text-sky-600 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                <span class="text-[10px] uppercase tracking-[0.2em] font-bold">Back to Home</span>
             </button>
         </main>
     </div>
 
-    <footer class="py-20 px-8 border-t border-gray-100">
-        <div class="max-w-screen-xl mx-auto flex justify-between items-center text-[10px] uppercase tracking-widest text-gray-400 font-medium">
-            <div>&copy; 2026 HOLO. All rights reserved.</div>
-            <button onclick="showView('legal')" class="hover:text-black">Legal Notice</button>
+    <footer class="py-12 px-8 border-t border-gray-50">
+        <div class="max-w-screen-xl mx-auto flex justify-between items-center text-[10px] uppercase tracking-widest text-gray-400 font-semibold">
+            <div>&copy; 2026 HOLO</div>
+            <button onclick="showView('legal')" class="hover:text-black transition-colors">Legal Notice</button>
         </div>
     </footer>
 
     <script>
-        const apiKey = ""; 
-
-        async function generatePhotonicImage() {
-            // Added explicit instructions for 'absolute pure white #FFFFFF background' 
-            // and removed shadow requests to prevent graying of the background.
-            const prompt = "A highly detailed, photorealistic photonic microchip hardware component. Brushed silver and dark silicon materials. Glowing electric blue circuitry paths. The chip MUST be on a completely pure white background, hex code #FFFFFF. Macro photography, bright studio lighting, no shadows on the background, isolated object.";
-            
-            try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${apiKey}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: prompt }] }],
-                        generationConfig: { responseModalities: ['IMAGE'] }
-                    })
-                });
-
-                const result = await response.json();
-                const base64Data = result.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data;
-                
-                if (base64Data) {
-                    const imgElement = document.getElementById('photonic-chip-img');
-                    imgElement.src = `data:image/png;base64,${base64Data}`;
-                    imgElement.onload = () => {
-                        document.getElementById('img-loading').style.display = 'none';
-                        document.getElementById('img-container').classList.replace('opacity-0', 'opacity-100');
-                    };
-                }
-            } catch (error) {
-                console.error("Image generation failed:", error);
-                document.getElementById('img-loading').innerHTML = '<span class="text-red-400">Connection error.</span>';
-            }
-        }
-
         function showView(view) {
             const views = { 'home': document.getElementById('main-view'), 'legal': document.getElementById('legal-view') };
-            Object.values(views).forEach(v => { v.classList.replace('visible-view', 'hidden-view'); });
-            views[view].classList.replace('hidden-view', 'visible-view');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            Object.values(views).forEach(v => { 
+                v.classList.add('hidden-view'); 
+                v.classList.remove('visible-view'); 
+            });
+            views[view].classList.remove('hidden-view');
+            views[view].classList.add('visible-view');
+            window.scrollTo({ top: 0, behavior: 'instant' });
         }
 
         window.onload = () => {
-            generatePhotonicImage();
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-            }, { threshold: 0.1 });
+            }, { threshold: 0.05 });
             document.querySelectorAll('section, .card-glass').forEach(el => {
                 el.classList.add('section-fade');
                 observer.observe(el);
