@@ -17,6 +17,14 @@
 
         /* Liquid Glass Effect */
         .liquid-glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* Card Glass Effect */
+        .card-glass {
             background: rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(16px) saturate(180%);
             -webkit-backdrop-filter: blur(16px) saturate(180%);
@@ -58,12 +66,18 @@
 
     <div class="light-glow"></div>
 
-    <!-- Minimal Header -->
-    <header class="fixed top-0 w-full z-50 px-8 py-10">
+    <!-- Minimal Header with Glassy Background -->
+    <header class="fixed top-0 w-full z-50 px-8 py-5 liquid-glass">
         <div class="max-w-screen-xl mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-normal tracking-tighter">HOLO</h1>
+            <div class="flex items-center gap-8">
+                <h1 class="text-2xl font-normal tracking-tighter">HOLO</h1>
+                <div class="hidden sm:block text-[10px] uppercase tracking-[0.3em] text-gray-400 font-medium border-l border-gray-100 pl-8">
+                    Photonic Integrated Circuits
+                </div>
+            </div>
+            
             <div class="text-[10px] uppercase tracking-[0.3em] text-gray-400 font-medium">
-                Photonic Integrated Circuits
+                Ireland
             </div>
         </div>
     </header>
@@ -85,7 +99,7 @@
         <section class="px-8 max-w-screen-xl mx-auto grid md:grid-cols-2 gap-12">
             
             <!-- Card 1: What is it? -->
-            <div class="liquid-glass p-12 rounded-[40px]">
+            <div class="card-glass p-12 rounded-[40px]">
                 <h3 class="text-xs uppercase tracking-[0.2em] text-gray-400 mb-8 font-semibold">The Core</h3>
                 <h4 class="text-3xl font-light mb-6">Light over Electrons</h4>
                 <p class="text-gray-500 leading-relaxed font-light">
@@ -94,7 +108,7 @@
             </div>
 
             <!-- Card 2: What it does -->
-            <div class="liquid-glass p-12 rounded-[40px]">
+            <div class="card-glass p-12 rounded-[40px]">
                 <h3 class="text-xs uppercase tracking-[0.2em] text-gray-400 mb-8 font-semibold">Sustainability</h3>
                 <h4 class="text-3xl font-light mb-6">Thermal Liberation</h4>
                 <p class="text-gray-500 leading-relaxed font-light">
@@ -103,7 +117,7 @@
             </div>
 
             <!-- Card 3: Deep Dive -->
-            <div class="md:col-span-2 liquid-glass p-12 md:p-20 rounded-[40px] mt-8">
+            <div class="md:col-span-2 card-glass p-12 md:p-20 rounded-[40px] mt-8">
                 <div class="max-w-3xl">
                     <h3 class="text-xs uppercase tracking-[0.2em] text-gray-400 mb-8 font-semibold">Architecture</h3>
                     <h4 class="text-5xl font-light mb-10 leading-tight">Parallelism by Design</h4>
@@ -156,7 +170,7 @@
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll('section, .liquid-glass').forEach(el => {
+        document.querySelectorAll('section, .card-glass').forEach(el => {
             el.classList.add('section-fade');
             observer.observe(el);
         });
