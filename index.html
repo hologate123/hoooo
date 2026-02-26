@@ -16,7 +16,6 @@
             scroll-behavior: smooth;
         }
 
-        /* Liquid Glass Effect */
         .liquid-glass {
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(20px) saturate(180%);
@@ -60,21 +59,29 @@
             transform: translateY(0);
         }
 
-        /* Virtual Navigation Transitions */
-        #main-view, #legal-view {
-            transition: opacity 0.4s ease, transform 0.4s ease;
+        .hidden-view { display: none; opacity: 0; }
+        .visible-view { display: block; opacity: 1; }
+
+        /* ADVANCED COLOR MATCHING 
+           1. Multiply blending kills off-whites.
+           2. High contrast/brightness forces near-whites to pure white.
+           3. Tight mask-image removes the edges of the image box entirely. */
+        .photonic-blend {
+            mix-blend-mode: multiply;
+            filter: contrast(1.15) brightness(1.05); 
+            mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+            -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
         }
 
-        .hidden-view {
-            display: none;
-            opacity: 0;
-            transform: translateY(10px);
+        /* Loading Shimmer Effect */
+        .shimmer {
+            background: linear-gradient(90deg, #ffffff 25%, #f8fafc 50%, #ffffff 75%);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
         }
-
-        .visible-view {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
     </style>
 </head>
@@ -82,7 +89,6 @@
 
     <div class="light-glow"></div>
 
-    <!-- Navigation -->
     <header class="fixed top-0 w-full z-50 px-8 py-5 liquid-glass">
         <div class="max-w-screen-xl mx-auto flex justify-between items-center">
             <div class="flex items-center gap-8">
@@ -97,25 +103,38 @@
         </div>
     </header>
 
-    <!-- HOME VIEW -->
     <div id="main-view" class="visible-view">
         <main class="pt-64 pb-32">
-            <!-- Hero Section -->
             <section class="px-8 max-w-screen-xl mx-auto mb-56">
-                <div class="mb-12 inline-block px-4 py-1 rounded-full border border-sky-100 text-[10px] uppercase tracking-[0.2em] text-sky-500 font-bold">
-                    Photonic Integrated Circuits
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <div class="mb-12 inline-block px-4 py-1 rounded-full border border-sky-100 text-[10px] uppercase tracking-[0.2em] text-sky-500 font-bold">
+                            Photonic Integrated Circuits
+                        </div>
+                        <h2 class="hero-text text-[clamp(3.5rem,10vw,8rem)] font-light mb-16">
+                            Beyond <br/>
+                            <span class="text-sky-500/80">Silicon.</span>
+                        </h2>
+                        <p class="max-w-xl text-2xl text-gray-500 font-light leading-snug">
+                            A new class of photonic integrated circuit that computes with light. <br/>
+                            No heat. No limits. Pure intelligence.
+                        </p>
+                    </div>
+                    
+                    <div class="relative group min-h-[500px] flex items-center justify-center">
+                        <div id="img-loading" class="absolute inset-0 shimmer rounded-[60px] flex flex-col items-center justify-center">
+                            <div class="w-8 h-8 border-2 border-sky-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+                            <span class="text-[10px] uppercase tracking-widest text-sky-500 font-bold">Synchronizing...</span>
+                        </div>
+                        
+                        <div id="img-container" class="relative w-full opacity-0 transition-opacity duration-1000 flex justify-center">
+                            <div class="absolute inset-0 bg-sky-400/5 rounded-full blur-[100px] group-hover:opacity-100 transition-opacity"></div>
+                            <img id="photonic-chip-img" alt="HOLO Photonic PIC" class="relative w-[120%] max-w-none h-auto drop-shadow-xl photonic-blend hover:scale-[1.05] transition-transform duration-1000">
+                        </div>
+                    </div>
                 </div>
-                <h2 class="hero-text text-[clamp(3.5rem,14vw,11rem)] font-light mb-16">
-                    Beyond <br/>
-                    <span class="text-sky-500/80">Silicon.</span>
-                </h2>
-                <p class="max-w-xl text-2xl text-gray-500 font-light leading-snug">
-                    A new class of photonic integrated circuit that computes with light. <br/>
-                    No heat. No limits. Pure intelligence.
-                </p>
             </section>
 
-            <!-- Core Section -->
             <section class="px-8 max-w-screen-xl mx-auto mb-56">
                 <div class="grid md:grid-cols-12 gap-12 items-end mb-24">
                     <div class="md:col-span-7">
@@ -147,7 +166,6 @@
         </main>
     </div>
 
-    <!-- LEGAL VIEW -->
     <div id="legal-view" class="hidden-view">
         <main class="pt-64 pb-64 px-8 max-w-screen-md mx-auto min-h-screen">
             <h2 class="text-6xl font-light mb-12 tracking-tight">Legal Notice</h2>
@@ -176,32 +194,60 @@
         </main>
     </div>
 
-    <!-- Footer -->
     <footer class="py-20 px-8 border-t border-gray-100">
         <div class="max-w-screen-xl mx-auto flex justify-between items-center text-[10px] uppercase tracking-widest text-gray-400 font-medium">
             <div>&copy; 2026 HOLO. All rights reserved.</div>
-            <div class="flex gap-8">
-                <button onclick="showView('legal')" class="hover:text-black">Legal Notice</button>
-            </div>
+            <button onclick="showView('legal')" class="hover:text-black">Legal Notice</button>
         </div>
     </footer>
 
     <script>
+        const apiKey = ""; 
+
+        async function generatePhotonicImage() {
+            // Added explicit instructions for 'absolute pure white #FFFFFF background' 
+            // and removed shadow requests to prevent graying of the background.
+            const prompt = "A highly detailed, photorealistic photonic microchip hardware component. Brushed silver and dark silicon materials. Glowing electric blue circuitry paths. The chip MUST be on a completely pure white background, hex code #FFFFFF. Macro photography, bright studio lighting, no shadows on the background, isolated object.";
+            
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: prompt }] }],
+                        generationConfig: { responseModalities: ['IMAGE'] }
+                    })
+                });
+
+                const result = await response.json();
+                const base64Data = result.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data;
+                
+                if (base64Data) {
+                    const imgElement = document.getElementById('photonic-chip-img');
+                    imgElement.src = `data:image/png;base64,${base64Data}`;
+                    imgElement.onload = () => {
+                        document.getElementById('img-loading').style.display = 'none';
+                        document.getElementById('img-container').classList.replace('opacity-0', 'opacity-100');
+                    };
+                }
+            } catch (error) {
+                console.error("Image generation failed:", error);
+                document.getElementById('img-loading').innerHTML = '<span class="text-red-400">Connection error.</span>';
+            }
+        }
+
         function showView(view) {
-            const views = {
-                'home': document.getElementById('main-view'),
-                'legal': document.getElementById('legal-view')
-            };
-            Object.values(views).forEach(v => { if(v) v.classList.replace('visible-view', 'hidden-view'); });
-            if(views[view]) views[view].classList.replace('hidden-view', 'visible-view');
+            const views = { 'home': document.getElementById('main-view'), 'legal': document.getElementById('legal-view') };
+            Object.values(views).forEach(v => { v.classList.replace('visible-view', 'hidden-view'); });
+            views[view].classList.replace('hidden-view', 'visible-view');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-        }, { threshold: 0.1 });
-
         window.onload = () => {
+            generatePhotonicImage();
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+            }, { threshold: 0.1 });
             document.querySelectorAll('section, .card-glass').forEach(el => {
                 el.classList.add('section-fade');
                 observer.observe(el);
