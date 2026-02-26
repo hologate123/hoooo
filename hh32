@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOLO | Pure Light Computing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #111111;
+            overflow-x: hidden;
+        }
+
+        /* Liquid Glass Effect */
+        .liquid-glass {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.02);
+        }
+
+        /* Subtle Light Pulse Background */
+        .light-glow {
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80vw;
+            height: 80vw;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.04) 0%, rgba(255, 255, 255, 0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .hero-text {
+            letter-spacing: -0.04em;
+            line-height: 0.95;
+        }
+
+        .section-fade {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .section-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="selection:bg-sky-100">
+
+    <div class="light-glow"></div>
+
+    <!-- Minimal Header -->
+    <header class="fixed top-0 w-full z-50 px-8 py-10">
+        <div class="max-w-screen-xl mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-normal tracking-tighter">HOLO</h1>
+            <div class="text-[10px] uppercase tracking-[0.3em] text-gray-400 font-medium">
+                Photonic Integrated Circuits
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-64 pb-32">
+        <!-- Hero Title -->
+        <section class="px-8 max-w-screen-xl mx-auto mb-40">
+            <h2 class="hero-text text-[clamp(3rem,12vw,10rem)] font-light mb-16">
+                Computing at the <br/>
+                <span class="text-sky-500/80">speed of light.</span>
+            </h2>
+            <p class="max-w-xl text-xl text-gray-500 font-light leading-relaxed">
+                HOLO is replacing electrons with photons. By utilizing light waves to process information, we bypass the physical limitations of traditional silicon, enabling a new era of frictionless intelligence.
+            </p>
+        </section>
+
+        <!-- Concept Cards -->
+        <section class="px-8 max-w-screen-xl mx-auto grid md:grid-cols-2 gap-12">
+            
+            <!-- Card 1: What is it? -->
+            <div class="liquid-glass p-12 rounded-[40px]">
+                <h3 class="text-xs uppercase tracking-[0.2em] text-gray-400 mb-8 font-semibold">The Core</h3>
+                <h4 class="text-3xl font-light mb-6">Light over Electrons</h4>
+                <p class="text-gray-500 leading-relaxed font-light">
+                    Traditional electronic chips rely on the movement of electrons through copper, which creates resistance and energy loss. Photonic chips guide light through microscopic waveguides, processing data without the physical friction that slows down modern computing.
+                </p>
+            </div>
+
+            <!-- Card 2: What it does -->
+            <div class="liquid-glass p-12 rounded-[40px]">
+                <h3 class="text-xs uppercase tracking-[0.2em] text-gray-400 mb-8 font-semibold">Sustainability</h3>
+                <h4 class="text-3xl font-light mb-6">Thermal Liberation</h4>
+                <p class="text-gray-500 leading-relaxed font-light">
+                    Heat is the primary enemy of performance. Because photons do not generate heat as they travel, HOLO architecture eliminates the thermal wall, reducing data center energy footprints while allowing for unprecedented processing density.
+                </p>
+            </div>
+
+            <!-- Card 3: Deep Dive -->
+            <div class="md:col-span-2 liquid-glass p-12 md:p-20 rounded-[40px] mt-8">
+                <div class="max-w-3xl">
+                    <h3 class="text-xs uppercase tracking-[0.2em] text-gray-400 mb-8 font-semibold">Architecture</h3>
+                    <h4 class="text-5xl font-light mb-10 leading-tight">Parallelism by Design</h4>
+                    <p class="text-lg text-gray-500 font-light leading-relaxed mb-8">
+                        Our chips utilize Wavelength Division Multiplexing, sending thousands of different colors of light through a single optical path. Each color carries its own independent data stream, allowing for massive parallel processing in a single circuit.
+                    </p>
+                    <ul class="space-y-4 text-gray-600 font-light">
+                        <li class="flex items-center gap-4">
+                            <span class="w-1 h-1 rounded-full bg-sky-400"></span>
+                            Immune to electromagnetic interference (EMI)
+                        </li>
+                        <li class="flex items-center gap-4">
+                            <span class="w-1 h-1 rounded-full bg-sky-400"></span>
+                            Ultra-low latency data interconnects
+                        </li>
+                        <li class="flex items-center gap-4">
+                            <span class="w-1 h-1 rounded-full bg-sky-400"></span>
+                            Scalable bandwidth for next-generation AI
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sovereign Europe Section -->
+        <section class="mt-64 px-8 max-w-screen-xl mx-auto text-center">
+            <div class="inline-block w-px h-24 bg-gradient-to-b from-transparent to-gray-200 mb-12"></div>
+            <h2 class="text-4xl font-light mb-8">European Sovereignty</h2>
+            <p class="max-w-2xl mx-auto text-gray-400 font-light leading-relaxed">
+                HOLO is headquartered in Ireland, contributing to a self-sufficient European semiconductor ecosystem. We are securing technological autonomy by building the future of light-based computing here.
+            </p>
+        </section>
+    </main>
+
+    <!-- Simple Footer -->
+    <footer class="py-20 px-8 border-t border-gray-100">
+        <div class="max-w-screen-xl mx-auto flex justify-between items-center text-[10px] uppercase tracking-widest text-gray-400 font-medium">
+            <div>HOLO SEMICONDUCTORS</div>
+            <div class="hidden md:block">IRELAND</div>
+            <div>&copy; 2026 All rights reserved by HOLO Semiconductors</div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section, .liquid-glass').forEach(el => {
+            el.classList.add('section-fade');
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
